@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
+const { create } = require("domain");
 
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
@@ -17,6 +18,90 @@ const teamMembers = []
 
 
 const appMenu = () => {
+    
+    function buildTeam(){
+
+    }
+
+
+    function addIntern() {
+
+    }
+    
+    
+    function addEngineer(){
+       inquirer.prompt([
+        {
+            type:"input",
+            name:"engineerName",
+            message:"What is your engineer name?"
+        },
+        {
+            type:"input",
+            name:"engineerId",
+            message:"What is your engineer id?"
+        },
+        {
+            type:"input",
+            name:"engineerEmail",
+            message:"What is your engineer email?"
+        },
+        {
+            type:"input",
+            name:"engineerGithub",
+            message:"What is your engineer github?"
+        },
+
+    ]).then(answers => {
+        const engineer = new Manager(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamMembers.push(engineer);
+        idList.push(answers.engineerId);
+        console.log(engineer);
+        createTeam();
+    })
+    }   
+
+
+
+
+
+    function createTeam(){
+       inquirer.prompt([
+        {
+            type:"list",
+            name:"memberChoice",
+            message:"Which type of team member would you like to add?",
+            choises: [
+                "Engineer",
+                "intern",
+                "I don't want to add any more team members"
+            ]
+        }
+    ]).then(userChoice => {
+        if(userChoice.memberChoice === "Engineer" ) {
+            // Add Engineer
+            addEngineer();
+
+        } else if(userChoice.memberChoice === "Intern") {
+            // Add Intern
+            addIntern();
+        } else if {
+              //build team function
+            buildTeam();
+        }
+            
+            
+
+        })
+
+    }
+
+   }
+
+
+
+
+
     function createManager(){
         console.log("Please build your team");
         inquirer.prompt([
@@ -51,11 +136,15 @@ const appMenu = () => {
 
             },
     ]).then(answer =>{
-        const manager = new Manager(answer.managerName, answer.managerId, answer.managerEmail, answer.managerOfficeNumber,);
+        const manager = new Manager(answer.managerName, answer.managerId, answer.managerEmail, answer.managerOfficeNumber);
+        console.log(manager);
         teamMembers.push(manager);
         idList.push(answer.managerId);
+        createTeam();
     })
     }
+
+    createManager();
 
 }
 
