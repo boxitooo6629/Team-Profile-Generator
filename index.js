@@ -61,11 +61,7 @@ const appMenu = () => {
     })
     }   
 
-
-
-
-
-    function createTeam(){
+    function createTeam() {
        inquirer.prompt([
         {
             type:"list",
@@ -85,22 +81,15 @@ const appMenu = () => {
         } else if(userChoice.memberChoice === "Intern") {
             // Add Intern
             addIntern();
-        } else if {
+        } else {
               //build team function
             buildTeam();
         }
-            
-            
-
         })
 
     }
 
-   }
-
-
-
-
+}
 
     function createManager(){
         console.log("Please build your team");
@@ -120,7 +109,7 @@ const appMenu = () => {
         },
             {
                 type:"input",
-                name:"managersId",
+                name:"managerId",
                 message:"What is the team manager's id?",
             },
             {
@@ -146,6 +135,6 @@ const appMenu = () => {
 
     createManager();
 
-}
+
 
 appMenu();
