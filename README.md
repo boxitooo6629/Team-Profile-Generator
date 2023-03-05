@@ -5,7 +5,7 @@
 Team Profile Generator that displays all the diffrent roles and information about the team.
 
 ## Visuals
- [/assets/Screenshot_37.png]
+(./assets/Screenshot_37.png)
 
 ## Installation
  
