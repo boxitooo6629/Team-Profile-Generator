@@ -20,12 +20,43 @@ const teamMembers = []
 const appMenu = () => {
     
     function buildTeam(){
-
+      if(!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+      }
+      fs.writeFileSync(outputPath, render(teamMembers), 'utf-8');
     }
 
 
     function addIntern() {
-
+       inquirer.prompt([
+           {
+             type: "input",
+             name: "internName",
+             message: "What is your intern name?",
+           },
+           {
+             type: "input",
+             name: "internId",
+             message: "What is your intern id?",
+           },
+           {
+             type: "input",
+             name: "internEmail",
+             message: "What is your intern email?",
+           },
+           {
+             type: "input",
+             name: "internSchool",
+             message: "What is your intern school?",
+           },
+         ])
+         .then(answers => {
+           const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+           teamMembers.push(intern);
+           idList.push(answers.internId);
+           //console.log(Intern);
+           createTeam();
+         })
     }
     
     
@@ -53,10 +84,10 @@ const appMenu = () => {
         },
 
     ]).then(answers => {
-        const engineer = new Manager(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
         teamMembers.push(engineer);
         idList.push(answers.engineerId);
-        console.log(engineer);
+        //console.log(engineer);
         createTeam();
     })
     }   
@@ -67,18 +98,18 @@ const appMenu = () => {
             type:"list",
             name:"memberChoice",
             message:"Which type of team member would you like to add?",
-            choises: [
+            choices: [
                 "Engineer",
                 "intern",
                 "I don't want to add any more team members"
-            ]
-        }
-    ]).then(userChoice => {
-        if(userChoice.memberChoice === "Engineer" ) {
+            ],
+        },
+    ]).then(answers => {
+        if(answers.memberChoice === "Engineer" ) {
             // Add Engineer
             addEngineer();
 
-        } else if(userChoice.memberChoice === "Intern") {
+        } else if(answers.memberChoice === "intern") {
             // Add Intern
             addIntern();
         } else {
@@ -88,8 +119,6 @@ const appMenu = () => {
         })
 
     }
-
-}
 
     function createManager(){
         console.log("Please build your team");
@@ -126,7 +155,7 @@ const appMenu = () => {
             },
     ]).then(answer =>{
         const manager = new Manager(answer.managerName, answer.managerId, answer.managerEmail, answer.managerOfficeNumber);
-        console.log(manager);
+        //console.log(manager);
         teamMembers.push(manager);
         idList.push(answer.managerId);
         createTeam();
@@ -134,7 +163,6 @@ const appMenu = () => {
     }
 
     createManager();
+}
 
-
-
-appMenu();
+appMenu()
